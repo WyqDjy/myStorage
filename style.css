@@ -1,0 +1,599 @@
+/* 开场欢迎界面 */
+.welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.8s ease-out;
+    overflow: hidden;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.welcome-content {
+    text-align: center;
+    color: white;
+    z-index: 1001;
+    animation: welcomeBounce 1s ease-in-out infinite alternate;
+}
+
+.welcome-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    animation: glow 1.5s ease-in-out infinite alternate;
+    white-space: normal;
+    /* 允许换行，因为欢迎界面文字较短 */
+}
+
+.welcome-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.welcome-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-button:active {
+    transform: scale(0.95);
+}
+
+/* 欢迎弹跳动画 */
+@keyframes welcomeBounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面基础样式 */
+body {
+    overflow: hidden !important;
+    /* 禁止页面滚动 */
+    touch-action: none !important;
+    /* 禁止触摸操作 */
+    overscroll-behavior: none !important;
+    /* 禁止过度滚动 */
+    background: #000;
+    /* 黑色背景，营造夜空效果 */
+    font-family: 'Arial', sans-serif;
+    /* 设置字体 */
+}
+
+/* Canvas元素样式 */
+canvas {
+    position: fixed !important;
+    /* 绝对定位，使Canvas重叠 */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    /* 全屏显示 */
+    height: 100% !important;
+    will-change: transform;
+    /* 提示浏览器优化渲染 */
+    -webkit-transform: translateZ(0);
+    /* 启用GPU硬件加速 */
+    transform: translateZ(0);
+    touch-action: none !important;
+}
+
+/* 星空Canvas层级 */
+#stars {
+    z-index: 1;
+}
+
+/* 烟花Canvas层级，置于星空之上 */
+#fireworks {
+    z-index: 2;
+}
+
+/* 生日祝福消息容器样式 */
+.birthday-message {
+    position: fixed !important;
+    /* 绝对定位，居中显示 */
+    z-index: 3 !important;
+    /* 置于最上层 */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    /* 精确居中 */
+    text-align: center;
+    /* 文字居中 */
+    color: #fff;
+    /* 白色文字 */
+    /* 文字阴影效果，增强视觉冲击力 */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 100, 100, 0.6);
+    animation: fadeIn 2s ease-in-out;
+    /* 淡入动画 */
+    pointer-events: none;
+    /* 禁止事件冒泡 */
+}
+
+/* 主标题样式 */
+h1 {
+    font-size: 3rem;
+    /* 大号字体 */
+    margin-bottom: 1rem;
+    /* 组合动画：脉冲和发光效果 */
+    animation: pulse 2s infinite, glow 1.5s ease-in-out infinite alternate;
+    font-weight: bold;
+    /* 加粗显示 */
+    white-space: nowrap;
+    /* 强制一行显示 */
+    overflow: hidden;
+    /* 隐藏溢出内容 */
+    text-overflow: ellipsis;
+    /* 溢出时显示省略号 */
+}
+
+/* 副标题样式 */
+p {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    /* 稍微降低不透明度 */
+    animation: fadeInUp 2s ease-in-out 0.5s both;
+    /* 延迟淡入上移动画 */
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+        /* 初始位置偏下 */
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+        /* 最终居中位置 */
+    }
+}
+
+/* 淡入上移动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        /* 初始位置偏下30px */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        /* 最终位置 */
+    }
+}
+
+/* 发光动画 */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 100, 100, 0.6);
+    }
+
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 100, 100, 0.8), 0 0 50px rgba(255, 100, 100, 0.6);
+    }
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        /* 原始大小 */
+    }
+
+    50% {
+        transform: scale(1.05);
+        /* 放大5% */
+    }
+}
+
+/* 平板设备响应式设计 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+        /* 减小标题字体 */
+    }
+
+    p {
+        font-size: 1.2rem;
+        /* 减小副标题字体 */
+    }
+}
+
+/* 生日蛋糕样式 */
+.birthday-cake {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    z-index: 5 !important;
+    transform: scale(0.8);
+    animation: cakeSlideIn 1s ease-out forwards;
+    pointer-events: none;
+    /* 禁止事件冒泡到蛋糕元素 */
+    will-change: transform;
+    /* 提示浏览器优化渲染 */
+}
+
+/* 蛋糕底盘 */
+.cake-plate {
+    width: 200px;
+    height: 10px;
+    background: linear-gradient(to bottom, #8B4513, #A0522D);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -15px;
+    left: -25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 蛋糕底部 */
+.cake-bottom {
+    width: 150px;
+    height: 60px;
+    background: linear-gradient(to bottom, #8B4513, #A0522D);
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 蛋糕底部奶油层 */
+.cake-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: linear-gradient(to right, #FFFFFF, #F0F0F0);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 巧克力装饰 */
+.cake-bottom::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 120px;
+    height: 30px;
+    background: repeating-linear-gradient(90deg,
+            transparent,
+            transparent 10px,
+            rgba(30, 144, 255, 0.3) 10px,
+            rgba(30, 144, 255, 0.3) 15px);
+    border-radius: 5px;
+}
+
+/* 蛋糕中层 */
+.cake-middle {
+    width: 130px;
+    height: 50px;
+    background: linear-gradient(to bottom, #FF69B4, #FF1493);
+    border-radius: 8px 8px 0 0;
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 蛋糕中层奶油 */
+.cake-middle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(to right, #FFFFFF, #F0F0F0);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 粉色蛋糕装饰 */
+.cake-middle::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 100px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 2px, transparent 2px);
+    background-size: 15px 15px;
+    background-position: 0 0, 7.5px 7.5px;
+    border-radius: 5px;
+}
+
+/* 蛋糕顶层 */
+.cake-top {
+    width: 110px;
+    height: 40px;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    bottom: 110px;
+    left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 蛋糕顶层奶油 */
+.cake-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(to right, #FFFFFF, #F0F0F0);
+    border-radius: 15px 15px 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 金色蛋糕装饰 */
+.cake-top::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: 90px;
+    height: 10px;
+    background: repeating-linear-gradient(-45deg,
+            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.8) 5px,
+            transparent 5px,
+            transparent 10px);
+    border-radius: 3px;
+}
+
+/* 草莓装饰 */
+.strawberry {
+    position: absolute;
+    width: 20px;
+    height: 25px;
+    background: linear-gradient(to bottom, #FF0000, #DC143C);
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.strawberry::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #00FF00;
+    border-radius: 0 100% 0 100%;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+/* 草莓位置 */
+.strawberry:nth-child(1) {
+    bottom: 150px;
+    left: 25px;
+    animation: strawberryBounce 2s ease-in-out infinite;
+}
+
+.strawberry:nth-child(2) {
+    bottom: 150px;
+    left: 55px;
+    animation: strawberryBounce 2s ease-in-out 0.5s infinite;
+}
+
+.strawberry:nth-child(3) {
+    bottom: 150px;
+    left: 85px;
+    animation: strawberryBounce 2s ease-in-out 1s infinite;
+}
+
+.strawberry:nth-child(4) {
+    bottom: 150px;
+    left: 115px;
+    animation: strawberryBounce 2s ease-in-out 1.5s infinite;
+}
+
+/* 蜡烛 */
+.candle {
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(to bottom, #FFFFFF, #F0F0F0);
+    position: absolute;
+    bottom: 150px;
+    left: 71px;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    z-index: 8;
+}
+
+/* 蜡烛蜡油 */
+.candle::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -3px;
+    width: 14px;
+    height: 10px;
+    background: radial-gradient(circle, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+/* 火焰 */
+.flame {
+    width: 12px;
+    height: 25px;
+    background: radial-gradient(circle, #FFD700, #FFA500, #FF4500);
+    position: absolute;
+    bottom: 190px;
+    left: 69px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flameFlicker 0.5s ease-in-out infinite alternate;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.6);
+    z-index: 7;
+}
+
+/* 蛋糕滑入动画 */
+@keyframes cakeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(0.8);
+    }
+}
+
+/* 火焰闪烁动画 */
+@keyframes flameFlicker {
+    from {
+        transform: scale(1);
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.6);
+    }
+
+    to {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 165, 0, 0.8);
+    }
+}
+
+/* 草莓弹跳动画 */
+@keyframes strawberryBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 随机祝福语样式 */
+.random-wish {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease-in-out 1s both;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    font-style: italic;
+}
+
+/* 音乐控制按钮 */
+.music-control {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+    /* 允许点击事件 */
+    will-change: transform;
+    /* 提示浏览器优化渲染 */
+}
+
+.music-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.5s both;
+    pointer-events: auto !important;
+    /* 允许点击事件 */
+    touch-action: manipulation !important;
+    /* 优化触摸性能，防止双击缩放 */
+    -webkit-tap-highlight-color: transparent;
+    /* 移除点击高亮 */
+}
+
+.music-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.music-btn.active {
+    background: rgba(255, 100, 100, 0.7);
+    animation: pulse 1s infinite;
+}
+
+/* 涟漪效果 */
+#ripple-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    will-change: transform;
+    /* 提示浏览器优化渲染 */
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    transform: scale(0);
+    animation: ripple-animation 0.8s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
